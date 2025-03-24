@@ -1,46 +1,19 @@
 using Esketit.API.Tests.Config;
 
-namespace Esketit.API.Tests
+namespace PeerBerry.API.Tests
 {
-	public class NoAuthTests
+	public class AuthTests
 	{
 		private readonly EsketitClient client;
-		public NoAuthTests()
+
+		public AuthTests()
 		{
 			client = new EsketitClient();
 		}
 
-		[Fact]
-		[Trait("CI", "true")]
-		public async Task GetPrimaryMarketList()
+		private async Task Init()
 		{
-			var list = await client.GetPrimaryMarketListAsync(new()
-			{
-				page = 1,
-				pageSize = 10,
-			});
-
-			Assert.NotNull(list);
-		}
-
-		[Fact]
-		[Trait("CI", "true")]
-		public async Task GetSecondaryMarketList()
-		{
-			var list = await client.GetSecondaryMarketListAsync(new()
-			{
-				page = 1,
-				pageSize = 10,
-			});
-
-			Assert.NotNull(list);
-			Assert.True(list.items.Length > 0);
-		}
-
-		[Fact]
-		public async Task Login()
-		{
-			await client.LoginAsync(new()
+			await client.InitializeUsingEmailAsync(new()
 			{
 				email = ConfigHelper.GetEnvironmentVariable("EsketitEmail"),
 				password = ConfigHelper.GetEnvironmentVariable("EsketitPassword"),
@@ -70,6 +43,34 @@ namespace Esketit.API.Tests
 					screenResolution = "1392x2560"
 				}
 			});
+		}
+
+		[Fact]
+		public async Task GetLoans()
+		{
+			await Init();
+			var result = await client.GetMyInvestmentsAsync(new()
+			{
+				page = 1,
+				pageSize = 10,
+			});
+			Assert.NotNull(result?.items);
+		}
+
+		[Fact]
+		public async Task GetAccountSummary()
+		{
+			await Init();
+			var result = await client.GetAccountSummaryAsync(new() { currencyCode = "EUR" });
+			Assert.True(result?.totalIncome > 0);
+		}
+
+		[Fact]
+		public async Task GetProfile()
+		{
+			await Init();
+			var result = await client.GetProfileAsync();
+			Assert.NotNull(result?.investorNumber);
 		}
 	}
 }

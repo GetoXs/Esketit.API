@@ -7,9 +7,9 @@ namespace Esketit.API
 	{
 		private readonly HttpClient _httpClient;
 		private readonly CookieContainer _cookieContainer = new();
-		private readonly string agent;
+		public string UserAgent { get; }
 
-		public EsketitProxyApi(string agent)
+		public EsketitProxyApi(string userAgent)
 		{
 			var clientHandler = new HttpClientHandler() { 
 				AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli,
@@ -20,7 +20,7 @@ namespace Esketit.API
 			{
 				BaseAddress = new Uri("https://esketit.com/api/"),
 			};
-			this.agent = agent;
+			this.UserAgent = userAgent;
 		}
 
 		public async Task<T?> SendRequest<T>(HttpMethod method, string url, object? body = null)
@@ -32,7 +32,7 @@ namespace Esketit.API
 			request.Headers.Add("Accept", "application/json; charset=UTF-8");
 			request.Headers.Add("Origin", "https://esketit.com");
 			request.Headers.Add("Referer", "https://esketit.com/");
-			request.Headers.Add("User-Agent", agent);
+			request.Headers.Add("User-Agent", UserAgent);
 
 			var xsrf = GetXsrf();
 			if (xsrf != null)

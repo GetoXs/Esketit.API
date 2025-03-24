@@ -1,10 +1,11 @@
-﻿using Esketit.API.RequestModels.AccountSummaryRequest;
+﻿using Esketit.API.RequestModels.AccountStatementRequest;
+using Esketit.API.RequestModels.AccountSummaryRequest;
 using Esketit.API.RequestModels.BuyInvestmentOptionsRequest;
 using Esketit.API.RequestModels.BuyInvestmentRequest;
 using Esketit.API.RequestModels.LoginRequest;
 using Esketit.API.RequestModels.QueryMyInvestmentsRequest;
 using Esketit.API.RequestModels.QueryPrimaryMarketRequest;
-using Esketit.API.ResponseModels;
+using Esketit.API.ResponseModels.AccountStatementResponse;
 using Esketit.API.ResponseModels.AccountSummaryResponse;
 using Esketit.API.ResponseModels.BuyInvestmentOptionsResponse;
 using Esketit.API.ResponseModels.LoginResponse;
@@ -19,10 +20,11 @@ namespace Esketit.API
 	public class EsketitClient
 	{
 		private readonly EsketitProxyApi _proxyApi;
+		public string UserAgent => _proxyApi.UserAgent;
 
-		public EsketitClient(string agentName = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36")
+		public EsketitClient(string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36")
 		{
-			_proxyApi = new EsketitProxyApi(agentName);
+			_proxyApi = new EsketitProxyApi(userAgent);
 		}
 		public EsketitClient(EsketitProxyApi proxyApi)
 		{
@@ -43,11 +45,17 @@ namespace Esketit.API
 		public async Task<LoginResponse?> LoginAsync(LoginRequest request)
 			=> await SendRequest<LoginResponse>(HttpMethod.Post, $"investor/public/login", false, request);
 
+		public async Task<QueryMarketResponse?> GetPrimaryMarketListAsync(QueryMarketRequest request)
+			=> await SendRequest<QueryMarketResponse>(HttpMethod.Post, $"investor/public/query-primary-market", false, request);
+
+		public async Task<SecondaryMarketResponse?> GetSecondaryMarketListAsync(QueryMarketRequest request)
+			=> await SendRequest<SecondaryMarketResponse>(HttpMethod.Post, $"investor/public/query-secondary-market", false, request);
+
 		#endregion
 
 		#region With auth
 		public async Task<ProfileResponse?> GetProfileAsync()
-			=> await SendRequest<ProfileResponse>(HttpMethod.Post, $"investor/profile", true);
+			=> await SendRequest<ProfileResponse>(HttpMethod.Get, $"investor/profile", true);
 
 		public async Task<AccountSummaryResponse?> GetAccountSummaryAsync(AccountSummaryRequest request)
 			=> await SendRequest<AccountSummaryResponse>(HttpMethod.Post, $"investor/account-summary", true, request);
@@ -55,11 +63,8 @@ namespace Esketit.API
 		public async Task<ReferenceDataResponse?> GetReferenceDataAsync()
 			=> await SendRequest<ReferenceDataResponse>(HttpMethod.Post, $"investor/reference-data", true);
 
-		public async Task<QueryMarketResponse?> GetPrimaryMarketListAsync(QueryMarketRequest request)
-			=> await SendRequest<QueryMarketResponse>(HttpMethod.Post, $"investor/public/query-primary-market", true, request);
-
-		public async Task<SecondaryMarketResponse?> GetSecondaryMarketListAsync(QueryMarketRequest request)
-			=> await SendRequest<SecondaryMarketResponse>(HttpMethod.Post, $"investor/public/query-secondary-market", true, request);
+		public async Task<AccountStatementResponse?> GetAccountStatementAsync(AccountStatementRequest request)
+			=> await SendRequest<AccountStatementResponse>(HttpMethod.Post, $"investor/query-account-statement", true, request);
 
 		public async Task<BuyInvestmentOptionsResponse?> BuyInvestmentOptionsAsync(BuyInvestmentOptionsRequest request)
 			=> await SendRequest<BuyInvestmentOptionsResponse>(HttpMethod.Post, $"investor/buy-investment-options", true, request);
