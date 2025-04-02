@@ -4,5 +4,4 @@
 	{
 		public int investmentId { get; set; }
 	}
-
 }

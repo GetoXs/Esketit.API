@@ -1,6 +1,6 @@
-﻿namespace Esketit.API.ResponseModels.QueryMarketResponse
+﻿namespace Esketit.API.ResponseModels.SecondaryMarketResponse
 {
-	public class QueryMarketResponse
+	public class SecondaryMarketQueryResponse
 	{
 		public int total { get; set; }
 		public Item[] items { get; set; }
@@ -27,6 +27,9 @@
 		public string productLabel { get; set; }
 		public string countryCode { get; set; }
 		public string collectionStatus { get; set; }
+		public decimal smOfferPrincipalAvailable { get; set; }
+		public decimal smDiscountOrPremiumPercent { get; set; }
+		public decimal smPrice { get; set; }
 	}
 
 	public class Termperiod
