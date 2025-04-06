@@ -101,15 +101,7 @@ namespace Esketit.API
 		{
 			if (isAuthorized)
 				ValidateAuth();
-			start:
-			try
-			{
-				return await _proxyApi.SendRequest<T>(method, url, body);
-			}
-			catch (UnauthorizedAccessException)
-			{
-				throw;
-			}
+			return await _proxyApi.SendRequest<T>(method, url, body);
 		}
 
 		#endregion
