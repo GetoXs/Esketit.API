@@ -1,6 +1,6 @@
-﻿namespace Esketit.API.ResponseModels.QueryMyInvestmentsResponse
+﻿namespace Esketit.API.ResponseModels.GetMyInvestmentsResponse
 {
-	public class QueryMyInvestmentsResponse
+	public class GetMyInvestmentsResponse
 	{
 		public int total { get; set; }
 		public Item[] items { get; set; }

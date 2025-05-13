@@ -1,7 +1,7 @@
 ﻿
-namespace Esketit.API.RequestModels.QueryPrimaryMarketRequest
+namespace Esketit.API.RequestModels.GetPrimaryMarketRequest
 {
-	public class PrimaryMarketRequest
+	public class GetPrimaryMarketRequest
 	{
 		public int page { get; set; }
 		public int pageSize { get; set; }

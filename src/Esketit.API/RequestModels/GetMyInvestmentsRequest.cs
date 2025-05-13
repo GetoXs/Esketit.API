@@ -1,6 +1,6 @@
-﻿namespace Esketit.API.RequestModels.QueryMyInvestmentsRequest
+﻿namespace Esketit.API.RequestModels.GetMyInvestmentsRequest
 {
-	public class QueryMyInvestmentsRequest
+	public class GetMyInvestmentsRequest
 	{
 		public int page { get; set; }
 		public int pageSize { get; set; }

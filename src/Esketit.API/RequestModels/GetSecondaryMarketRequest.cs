@@ -1,6 +1,6 @@
-﻿namespace Esketit.API.RequestModels.SecondaryMarketRequest
+﻿namespace Esketit.API.RequestModels.GetSecondaryMarketRequest
 {
-	public class SecondaryMarketRequest
+	public class GetSecondaryMarketRequest
 	{
 		public int page { get; set; }
 		public int pageSize { get; set; }
@@ -22,8 +22,8 @@
 		public string interestRatePercentFrom { get; set; }
 		public string interestRatePercentTo { get; set; }
 		public bool extensions { get; set; }
-		public string smDiscountOrPremiumPercentFrom { get; set; }
-		public string smDiscountOrPremiumPercentTo { get; set; }
+		public decimal smDiscountOrPremiumPercentFrom { get; set; }
+		public decimal smDiscountOrPremiumPercentTo { get; set; }
 		public bool excludeAlreadyInvested { get; set; }
 		public bool buybackOnly { get; set; }
 	}
