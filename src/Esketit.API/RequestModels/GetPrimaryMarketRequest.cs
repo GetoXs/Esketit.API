@@ -7,6 +7,8 @@ namespace Esketit.API.RequestModels.GetPrimaryMarketRequest
 		public int pageSize { get; set; }
 		// Object on puropse - to manipulate new params in future.
 		public object filter { get; set; }
+		public string sortBy { get; set; }
+		public bool? sortDesc { get; set; }
 	}
 
 	public class Filter
@@ -16,9 +18,9 @@ namespace Esketit.API.RequestModels.GetPrimaryMarketRequest
 		public string[] originators { get; set; }
 		public string principalOfferFrom { get; set; }
 		public string currencyCode { get; set; }
-		public bool buybackOnly { get; set; }
-		public bool excludeAlreadyInvested { get; set; }
-		public bool extensions { get; set; }
+		public bool? buybackOnly { get; set; }
+		public bool? excludeAlreadyInvested { get; set; }
+		public bool? extensions { get; set; }
 		public string[] collectionStatuses { get; set; }
 		public string remainingTermInDaysFrom { get; set; }
 		public string remainingTermInDaysTo { get; set; }
