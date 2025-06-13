@@ -1,6 +1,6 @@
 using Esketit.API.Tests.Config;
 
-namespace PeerBerry.API.Tests
+namespace Esketit.API.Tests
 {
 	public class AuthTests
 	{
